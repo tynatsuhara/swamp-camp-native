@@ -29,7 +29,7 @@ const nativefierOptions = {
   icon: "icon.png",
   width: 1280,
   height: 800,
-  showMenuBar: false,
+  showMenuBar: true,
   fastQuit: false,
   maximize: true,
 };

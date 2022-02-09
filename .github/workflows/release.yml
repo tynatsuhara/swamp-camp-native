@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [macos-latest, windows-latest]
 
     permissions:
       contents: write
@@ -30,6 +30,6 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: "build/swamp-camp-win32-x64.zip"
+          artifacts: "build/swamp-camp-darwin-x64.zip,build/swamp-camp-win32-x64.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ matrix.os }}

@@ -30,5 +30,6 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
+          artifacts: "build/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ matrix.os }}

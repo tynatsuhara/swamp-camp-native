@@ -1,13 +1,12 @@
 {
   "name": "swamp-camp-native",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Generates an Electron wrapper around https://swamp.camp",
   "scripts": {
     "build": "node main.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Tyler Bonnell",
+  "license": "MIT",
   "dependencies": {
     "nativefier": "^46.1.0"
   }

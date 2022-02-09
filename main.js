@@ -21,7 +21,7 @@ const zip = (platform) => {
   }
 };
 
-const nativefierOptions = {
+const defaultNativefierOptions = {
   name: "SWAMP CAMP",
   targetUrl: "https://swamp.camp?native_app=true",
   out: "build/",
@@ -34,13 +34,19 @@ const nativefierOptions = {
   maximize: true,
 };
 
-const macM1 = {
-  ...nativefierOptions,
+const macM1Options = {
+  ...defaultNativefierOptions,
   arch: "arm64",
 };
-const macIntel = {
-  ...nativefierOptions,
+
+const macIntelOptions = {
+  ...defaultNativefierOptions,
   arch: "x64",
+};
+
+const windowsOptions = {
+  ...defaultNativefierOptions,
+  icon: "icon.ico",
 };
 
 const builds = [];
@@ -48,13 +54,13 @@ const archives = [];
 
 if (process.platform === "darwin") {
   // build for both M1 and Intel macs
-  builds.push(nativefier(macM1), nativefier(macIntel));
+  builds.push(nativefier(macM1Options), nativefier(macIntelOptions));
   // arm64 doesn't currently work on github actions
   // https://github.com/actions/runner/issues/805
   archives.push("darwin-arm64", "darwin-x64");
 } else if (process.platform === "win32") {
   // use platform defaults
-  builds.push(nativefier(nativefierOptions));
+  builds.push(nativefier(windowsOptions));
   archives.push("win32-x64");
 } else {
   throw new Error("unsupported platform");

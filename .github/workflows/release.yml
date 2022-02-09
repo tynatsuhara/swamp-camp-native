@@ -30,6 +30,6 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: "build/SWAMP CAMP-darwin-x64/SWAMP CAMP.app,build/SWAMP CAMP-win32-x64/SWAMP CAMP.exe"
+          artifacts: "build/swamp-camp.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ matrix.os }}

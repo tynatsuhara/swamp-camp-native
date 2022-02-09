@@ -1,6 +1,9 @@
 name: Release
 
-on: push
+on: 
+  push:
+    tags:
+    - '*'
 
 jobs:
   release:
@@ -19,6 +22,10 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 10
+        
+    - run: npm install
+    
+    - run: npm run build
         
     - uses: ncipollo/release-action@v1
       with:

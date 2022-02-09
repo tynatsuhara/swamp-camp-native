@@ -1,16 +1,19 @@
-const nativefier = require("nativefier").default;
+const promisify = require("util").promisify;
+const nativefier = promisify(require("nativefier").default);
 const fs = require("fs");
 const archiver = require("archiver");
+const process = require("process");
 
-const ZIP_FILE = "/build/swamp-camp.zip";
-
-const zip = (directory) => {
+const zip = (platform) => {
   try {
-    const output = fs.createWriteStream(__dirname + ZIP_FILE);
+    const builtDirectory = "build/SWAMP CAMP-" + platform;
+    const output = fs.createWriteStream(
+      __dirname + "/build/swamp-camp-" + platform + ".zip"
+    );
     const archive = archiver("zip", {
       zlib: { level: 9 }, // Sets the compression level.
     });
-    archive.directory(directory, false);
+    archive.directory(builtDirectory, false);
     archive.pipe(output);
     archive.finalize();
   } catch (e) {
@@ -31,15 +34,28 @@ const nativefierOptions = {
   maximize: true,
 };
 
-nativefier(nativefierOptions, (error, appPath) => {
-  if (error) {
-    console.error(error);
-    return;
-  }
+const macM1 = {
+  ...nativefierOptions,
+  arch: "arm64",
+};
+const macIntel = {
+  ...nativefierOptions,
+  arch: "x64",
+};
 
-  console.log("SWAMP CAMP has been built:", appPath);
+const builds = [];
+const archives = [];
 
-  const outputs = ["darwin-arm64", "darwin-x64", "win32-x64"];
+if (process.platform === "darwin") {
+  // build for both M1 and Intel macs
+  builds.push(nativefier(macM1), nativefier(macIntel));
+  archives.push("darwin-arm64", "darwin-x64");
+} else if (process.platform === "win32") {
+  // use platform defaults
+  builds.push(nativefier(nativefierOptions));
+  archives.push("win32-x64");
+} else {
+  throw new Error("unsupported platform");
+}
 
-  outputs.map((o) => "build/SWAMP CAMP-" + o).forEach(zip);
-});
+Promise.all(builds).then(() => archives.forEach(zip));

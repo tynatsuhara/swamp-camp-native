@@ -1,16 +1,18 @@
 const nativefier = require("nativefier").default;
-const zipper = require("zip-local");
+const fs = require("fs");
+const archiver = require("archiver");
 
-const ZIP_FILE = "build/swamp-camp.zip";
+const ZIP_FILE = "/build/swamp-camp.zip";
 
-const zip = (path) => {
+const zip = (directory) => {
   try {
-    zipper.sync
-      .zip(path)
-      .compress()
-      .save(ZIP_FILE, () =>
-        console.log(path + " has been packaged into " + ZIP_FILE)
-      );
+    const output = fs.createWriteStream(__dirname + ZIP_FILE);
+    const archive = archiver("zip", {
+      zlib: { level: 9 }, // Sets the compression level.
+    });
+    archive.directory(directory, false);
+    archive.pipe(output);
+    archive.finalize();
   } catch (e) {
     // this file doesn't exist — ignore it
   }
@@ -37,11 +39,7 @@ nativefier(nativefierOptions, (error, appPath) => {
 
   console.log("SWAMP CAMP has been built:", appPath);
 
-  const outputs = [
-    "darwin-arm64/SWAMP CAMP.app",
-    "darwin-x64/SWAMP CAMP.app",
-    "win32-x64/SWAMP CAMP.exe",
-  ];
+  const outputs = ["darwin-arm64", "darwin-x64", "win32-x64"];
 
   outputs.map((o) => "build/SWAMP CAMP-" + o).forEach(zip);
 });

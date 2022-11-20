@@ -18,9 +18,9 @@ jobs:
 
       - uses: actions/setup-node@v1
         with:
-          node-version: 10
+          node-version: lts/gallium
 
-      - run: nvm use && npm ci && npm run build
+      - run: npm ci && npm run build
 
       - uses: ncipollo/release-action@v1
         with:

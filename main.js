@@ -1,22 +1,20 @@
-const promisify = require("util").promisify
-const nativefier = promisify(require("nativefier").default)
+const { buildNativefierApp } = require("nativefier")
 const fs = require("fs")
 const archiver = require("archiver")
 const process = require("process")
 
-const zip = (platform) => {
-    const builtDirectory = `build/SWAMP CAMP-${platform}`
-    const output = fs.createWriteStream(`${__dirname}/build/swamp-camp-${platform}.zip`)
+const zip = (buildDirectory, platformId) => {
+    const output = fs.createWriteStream(`${__dirname}/build/swamp-camp-${platformId}.zip`)
     const archive = archiver("zip", {
         zlib: { level: 9 }, // Sets the compression level
     })
-    archive.directory(builtDirectory, false)
+    archive.directory(buildDirectory, false)
     archive.pipe(output)
     archive.finalize()
 }
 
 const main = async () => {
-    await nativefier({
+    const buildDirectory = await buildNativefierApp({
         name: "SWAMP CAMP",
         targetUrl: "https://swamp.camp?native_app=true",
         out: "build/",
@@ -29,7 +27,7 @@ const main = async () => {
         maximize: true,
     })
 
-    zip(`${process.platform}-${process.arch}`)
+    zip(buildDirectory, `${process.platform}-${process.arch}`)
 }
 
 main()

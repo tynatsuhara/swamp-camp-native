@@ -3,28 +3,28 @@ name: Release
 on: push
 
 jobs:
-  release:
-    runs-on: ${{ matrix.os }}
+    release:
+        runs-on: ${{ matrix.os }}
 
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest]
+        strategy:
+            matrix:
+                os: [macos-latest, windows-latest, ubuntu-latest]
 
-    permissions:
-      contents: write
+        permissions:
+            contents: write
 
-    steps:
-      - uses: actions/checkout@v2
+        steps:
+            - uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 16
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 16
 
-      - run: npm i && npm run build
+            - run: npm i && npm run build
 
-      - uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          artifacts: "build/swamp-camp-darwin-x64.zip,build/swamp-camp-win32-x64.zip"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ matrix.os }}
+            - uses: ncipollo/release-action@v1
+              with:
+                  allowUpdates: true
+                  artifacts: "build/swamp-camp-darwin-x64.zip,build/swamp-camp-win32-x64.zip,build/swamp-camp-linux-x64.zip"
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  tag: ${{ matrix.os }}

@@ -1,14 +1,14 @@
 {
-  "name": "swamp-camp-native",
-  "version": "1.0.0",
-  "description": "Generates an Electron wrapper around https://swamp.camp",
-  "scripts": {
-    "build": "node main.js"
-  },
-  "author": "Tyler Natsuhara",
-  "license": "MIT",
-  "dependencies": {
-    "archiver": "^5.3.0",
-    "nativefier": "^50.0.1"
-  }
+    "name": "swamp-camp-native",
+    "version": "1.0.0",
+    "description": "Generates an Electron wrapper around https://swamp.camp",
+    "scripts": {
+        "build": "node main.js"
+    },
+    "author": "Tyler Natsuhara",
+    "license": "MIT",
+    "dependencies": {
+        "archiver": "^5.3.0",
+        "nativefier": "^50.0.1"
+    }
 }

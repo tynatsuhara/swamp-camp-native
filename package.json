@@ -5,7 +5,7 @@
   "scripts": {
     "build": "node main.js"
   },
-  "author": "Tyler Bonnell",
+  "author": "Tyler Natsuhara",
   "license": "MIT",
   "dependencies": {
     "archiver": "^5.3.0",

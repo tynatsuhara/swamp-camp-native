@@ -27,13 +27,9 @@ const main = async () => {
         showMenuBar: false,
         fastQuit: false,
         maximize: true,
+        fullScreen: true,
+        internalUrls: ["camp.ty.pizza"],
     })
-
-    if (process.platform === "linux") {
-        const desktopFilePath = path.join(__dirname, "static", "SWAMPCAMP.desktop")
-        const outputDesktopFilePath = path.join(buildDirectory, "SWAMPCAMP.desktop")
-        fs.copyFileSync(desktopFilePath, outputDesktopFilePath)
-    }
 
     zip(buildDirectory, `${process.platform}-${process.arch}`)
 }

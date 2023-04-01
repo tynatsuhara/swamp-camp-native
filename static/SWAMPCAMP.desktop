@@ -7,7 +7,7 @@ Type=Application
 Name=SWAMP CAMP
 
 # The executable of the application, possibly with arguments.
-Exec=SWAMPCAMP
+Exec=Exec=bash -c '"$(dirname "$1")"/SWAMPCAMP'
 
 # The name of the icon that will be used to display this entry
 Icon=icon.png

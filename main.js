@@ -2,9 +2,11 @@ const { buildNativefierApp } = require("nativefier")
 const fs = require("fs")
 const archiver = require("archiver")
 const process = require("process")
+const path = require("path")
 
 const zip = (buildDirectory, platformId) => {
-    const output = fs.createWriteStream(`${__dirname}/build/swamp-camp-${platformId}.zip`)
+    const outputPath = path.join(__dirname, "build", `swamp-camp-${platformId}.zip`)
+    const output = fs.createWriteStream(outputPath)
     const archive = archiver("zip", {
         zlib: { level: 9 }, // Sets the compression level
     })
@@ -26,6 +28,12 @@ const main = async () => {
         fastQuit: false,
         maximize: true,
     })
+
+    if (process.platform === "linux") {
+        const desktopFilePath = path.join(__dirname, "static", "SWAMPCAMP.desktop")
+        const outputDesktopFilePath = path.join(buildDirectory, "SWAMPCAMP.desktop")
+        fs.copyFileSync(desktopFilePath, outputDesktopFilePath)
+    }
 
     zip(buildDirectory, `${process.platform}-${process.arch}`)
 }

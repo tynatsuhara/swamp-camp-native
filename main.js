@@ -29,6 +29,7 @@ const main = async () => {
         maximize: true,
         fullScreen: true,
         internalUrls: ["camp.ty.pizza"],
+        disableOldBuildWarning: true,
     })
 
     zip(buildDirectory, `${process.platform}-${process.arch}`)
